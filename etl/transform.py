@@ -39,10 +39,10 @@ def transform_launches(raw_launches):
     # convert to timestamp
     cleaned.loc[:, "date_utc"] = pd.to_datetime(cleaned["date_utc"])
 
-    # fillna then ensure boolean dtype to avoid downcasting warnings
+    # fillna and ensure boolean dtype
     cleaned.loc[:, "success"] = cleaned["success"].fillna(False).astype(bool)
 
-    # For join table
+    # For table join
     payload_mapping = cleaned.loc[:, ["launch_id", "payload_ids"]].copy()
 
     return cleaned.drop(columns=["payload_ids"]), payload_mapping

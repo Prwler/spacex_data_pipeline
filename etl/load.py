@@ -1,4 +1,3 @@
-# etl/load.py
 from sqlalchemy import create_engine, text
 import pandas as pd
 from config import DB_CONNECTION_STRING
@@ -21,7 +20,7 @@ def load_table(df: pd.DataFrame, table_name: str):
     - If the table exists, TRUNCATE CASCADE then append new rows.
     """
 
-    # Convert Python lists -> Postgres array literal
+    # Convert Python lists to pgres arrays
     for col in df.columns:
         if df[col].apply(lambda x: isinstance(x, list)).any():
             df[col] = df[col].apply(
@@ -30,8 +29,8 @@ def load_table(df: pd.DataFrame, table_name: str):
 
     with engine.begin() as conn:
         if not table_exists(conn, table_name):
-            # Create an empty table with the correct columns (no drop because it doesn't exist)
-            # to_sql with if_exists='replace' is safe here because table is absent.
+            # Create an empty table with the valid colums
+            # to_sql with if_exists='replace' is safe here because the table is absent.
             df.head(0).to_sql(table_name, conn, if_exists="replace", index=False)
         else:
             # Table exists: safely clear its rows while preserving the schema and constraints

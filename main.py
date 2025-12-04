@@ -8,17 +8,17 @@ from etl.load import load_table
 
 def run():
 
-    # EXTRACT
+    # EXTRACTION
     launches_raw = extract_launches()
     rockets_raw = extract_rockets()
     payloads_raw = extract_payloads()
 
-    # TRANSFORM
+    # TRANSFORMING
     rockets_clean = transform_rockets(rockets_raw)
     payloads_clean = transform_payloads(payloads_raw)
     launches_clean, launch_payload_map = transform_launches(launches_raw)
 
-    # LOAD
+    # LOADING
     load_table(rockets_clean, "rockets")
     load_table(payloads_clean, "payloads")
     load_table(launches_clean, "launches")
