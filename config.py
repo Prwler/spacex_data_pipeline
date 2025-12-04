@@ -1,1 +1,1 @@
-DB_CONNECTION_STRING = "postgresql://postgres:W!lson2003@localhost:5432/spacex?client_encoding=utf8"
+DB_CONNECTION_STRING = "postgresql://postgres:password@localhost:5432/spacex?client_encoding=utf8"
